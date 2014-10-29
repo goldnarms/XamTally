@@ -12,7 +12,8 @@ namespace XamTally
 	{
 		public static Page GetMainPage()
 		{
-		    return new MainPage();
+		    var mainPage = new MainPage();
+		    return new NavigationPage(mainPage);
 		}
 	}
 }

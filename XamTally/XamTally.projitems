@@ -11,5 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\MainPage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Timer.cs" />
   </ItemGroup>
 </Project>
