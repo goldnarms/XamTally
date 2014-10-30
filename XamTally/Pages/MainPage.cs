@@ -9,7 +9,7 @@ using Xamarin.Forms;
 using System.Runtime;
 using System.Threading;
 using XamTally.Services;
-using Timer = XamTally.Services.Timer;
+using XamTally.Models;
 
 namespace XamTally.Pages
 {
@@ -23,10 +23,12 @@ namespace XamTally.Pages
         private int _timeInterval = 300;
         private DateTime _startTime;
         private int _ticks = 0;
+        private TimerState _timerState;
 
         public MainPage()
         {
             Init();
+            SetupUI();
             Content = BuildContent();
             BuildToolbar();
         }
@@ -35,6 +37,20 @@ namespace XamTally.Pages
         {
             _interval = new TimeSpan(0, 1, 0);
             _tallyCount = 0;
+            var timerCallback = new TimerCallback(UpdateTimer);
+            _timerState = new TimerState();
+            _timerState.tmr = new Timer(timerCallback, _timerState, 0, _timeInterval);
+        }
+
+        private void UpdateTimer(Object state)
+        {
+            var timerState = (TimerState)state;
+            _timerState++;
+            _timerLabel.Text = TimeSpan.FromMilliseconds(_timeInterval * _timerState.Counter).ToString(@"mm\:ss\.f");
+        }
+
+        private void SetupUI()
+        {
             _tallyLabel = new Label
             {
                 Text = _tallyCount.ToString(),
@@ -116,7 +132,7 @@ namespace XamTally.Pages
                 ColumnDefinitions = new ColumnDefinitionCollection()
                 {
                     new ColumnDefinition { Width = GridLength.Auto }
-                    //new ColumnDefinition { }
+                    new ColumnDefinition { }
                 },
                 RowDefinitions = new RowDefinitionCollection()
                 {
