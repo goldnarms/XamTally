@@ -103,7 +103,9 @@
     <AndroidResource Include="Resources\Drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\AndroidManifest.xml" />
+    <Content Include="Properties\AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="..\XamTally\XamTally.projitems" Label="Shared" Condition="Exists('..\XamTally\XamTally.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
