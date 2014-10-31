@@ -24,6 +24,7 @@ namespace XamTally.Pages
         private DateTime _startTime;
         private int _ticks = 0;
         private TimerState _timerState;
+        private bool _isInPortrait;
 
         public MainPage()
         {
@@ -40,6 +41,7 @@ namespace XamTally.Pages
             var timerCallback = new TimerCallback(UpdateTimer);
             _timerState = new TimerState();
             _timerState.tmr = new Timer(timerCallback, _timerState, 0, _timeInterval);
+            _isInPortrait = false; //TODO: Check orientation
         }
 
         private void UpdateTimer(Object state)
@@ -202,5 +204,28 @@ namespace XamTally.Pages
         {
             _timerStarted = false;
         }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            if(width > height && _isInPortrait)
+            {
+                UpdateOrientation(Orientation.Landscape);
+            }else if(height > width && !_isInPortrait){
+                UpdateOrientation(Orientation.Portrait)
+            }
+        }
+
+        private void UpdateOrientation(Orientation orientation)
+        {
+            _isInPortrait = _isInPortrait == orientation.Portrait;
+            //TODO: setup grid according to orientation
+        }
+    }
+
+    public enum Orientation
+    {
+        Portrait,
+        Landscape
     }
 }
