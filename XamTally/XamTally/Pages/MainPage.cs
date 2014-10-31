@@ -207,17 +207,19 @@ namespace XamTally.Pages
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-            if(width > height && _isInPortrait)
+            if (width > height && _isInPortrait)
             {
                 UpdateOrientation(Orientation.Landscape);
-            }else if(height > width && !_isInPortrait){
-                UpdateOrientation(Orientation.Portrait)
+            }
+            else if (height > width && !_isInPortrait)
+            {
+                UpdateOrientation(Orientation.Portrait);
             }
         }
 
         private void UpdateOrientation(Orientation orientation)
         {
-            _isInPortrait = _isInPortrait == orientation.Portrait;
+            _isInPortrait = orientation == Orientation.Portrait;
             //TODO: setup grid according to orientation
         }
     }

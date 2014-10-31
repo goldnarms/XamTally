@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22129.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "XamTally", "XamTally\XamTally\XamTally.shproj", "{5787ED2C-6D36-48E6-936F-EE1AC7A14B69}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamTally.iOS", "XamTally\XamTally.iOS\XamTally.iOS.csproj", "{802D04CC-94BB-4E36-B887-32614F131245}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamTally.Android", "XamTally\XamTally.Android\XamTally.Android.csproj", "{5082FC92-3308-4E47-83FC-1755F22F81A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{3FF5CA7F-6D0A-48A0-9318-276B348B0895}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -177,6 +179,38 @@ Global
 		{5082FC92-3308-4E47-83FC-1755F22F81A6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5082FC92-3308-4E47-83FC-1755F22F81A6}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{5082FC92-3308-4E47-83FC-1755F22F81A6}.Release|x86.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|Mixed Platforms.Build.0 = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Ad-Hoc|x86.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|ARM.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|Mixed Platforms.Build.0 = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.AppStore|x86.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|ARM.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3FF5CA7F-6D0A-48A0-9318-276B348B0895}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
