@@ -8,7 +8,6 @@ using Outcoder.UI.Xaml;
 using Xamarin.Forms;
 using System.Runtime;
 using System.Threading;
-using XamTally.Services;
 using XamTally.Models;
 
 namespace XamTally.Pages
@@ -39,13 +38,13 @@ namespace XamTally.Pages
             _tallyCount = 0;
             var timerCallback = new TimerCallback(UpdateTimer);
             _timerState = new TimerState();
-            _timerState.tmr = new Timer(timerCallback, _timerState, 0, _timeInterval);
+            _timerState.Tmr = new Timer(timerCallback, _timerState, 0, _timeInterval);
         }
 
         private void UpdateTimer(Object state)
         {
             var timerState = (TimerState)state;
-            _timerState++;
+            _timerState.Counter++;
             _timerLabel.Text = TimeSpan.FromMilliseconds(_timeInterval * _timerState.Counter).ToString(@"mm\:ss\.f");
         }
 
@@ -129,9 +128,9 @@ namespace XamTally.Pages
             var grid = new Grid
             {
                 BackgroundColor = Color.Red,
-                ColumnDefinitions = new ColumnDefinitionCollection()
+                ColumnDefinitions = new ColumnDefinitionCollection
                 {
-                    new ColumnDefinition { Width = GridLength.Auto }
+                    new ColumnDefinition { Width = GridLength.Auto },
                     new ColumnDefinition { }
                 },
                 RowDefinitions = new RowDefinitionCollection()
