@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 
 using Xamarin.Forms;
-using XamTally.Pages;
 
 namespace XamTally
 {
-	public class App
+	public static class App
 	{
 		public static Page GetMainPage()
 		{

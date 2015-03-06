@@ -1,1 +1,26 @@
-﻿<Properties StartupItem="XamTally\XamTally.Android\XamTally.Android.csproj" />
+﻿<Properties StartupItem="XamTally\XamTally.Android\XamTally.Android.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Android.Nexus 7 (KitKat)" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="XamTally\XamTally\Pages\MainPage.cs">
+    <Files>
+      <File FileName="XamTally\XamTally\Pages\MainPage.cs" Line="65" Column="65" />
+      <File FileName="XamTally\XamTally\Models\TimerState.cs" Line="19" Column="19" />
+      <File FileName="XamTally\XamTally\App.cs" Line="16" Column="16" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="XamTally" expanded="True">
+            <Node name="Models" expanded="True" />
+            <Node name="Pages" expanded="True">
+              <Node name="MainPage.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -8,9 +8,8 @@ using Outcoder.UI.Xaml;
 using Xamarin.Forms;
 using System.Runtime;
 using System.Threading;
-using XamTally.Models;
 
-namespace XamTally.Pages
+namespace XamTally
 {
     public class MainPage : ContentPage
     {
@@ -19,12 +18,16 @@ namespace XamTally.Pages
         private int _tallyCount;
         private Label _tallyLabel;
         private Label _timerLabel;
-        private int _timeInterval = 300;
+        private const int _timeInterval = 300;
         private DateTime _startTime;
-        private int _ticks = 0;
+        //private int _ticks = 0;
         private TimerState _timerState;
         private bool _isInPortrait;
 		private Grid _grid;
+		private ToolbarItem _toggleTimer;
+		private StackLayout _tallyStack;
+		private StackLayout _timeStack;
+		private bool _orientationLocked;
 
         public MainPage()
         {
@@ -39,8 +42,9 @@ namespace XamTally.Pages
             _interval = new TimeSpan(0, 1, 0);
             _tallyCount = 0;
             _timerState = new TimerState();
-			_timerLabel = new Label { Text = "01:00.0" };
+			_timerLabel = new Label { Text = _interval.ToString (@"mm\:ss\.f") };
             _isInPortrait = false; //TODO: Check orientation
+			_orientationLocked = false;
         }
 
         private void UpdateTimer(Object state)
@@ -51,13 +55,16 @@ namespace XamTally.Pages
 					_timerState.Counter++;
 					var timeElapsed = TimeSpan.FromMilliseconds (_timeInterval * _timerState.Counter);
 					var remaining = _interval - timeElapsed;
-					if(remaining.TotalSeconds < 10){
-						_grid.BackgroundColor = Color.Teal;
-					} 
 					var prefix = "";
 					if(remaining.TotalSeconds < 0){
 						_grid.BackgroundColor = Color.Red;
 						prefix = "-";
+					}
+					else if(remaining.TotalSeconds < 10){
+						_grid.BackgroundColor = Color.FromHex("FFFFA500");
+					} 
+					else{
+						_grid.BackgroundColor = Color.Black;
 					}
 					_timerLabel.Text = prefix + remaining.ToString (@"mm\:ss\.f");
 				});
@@ -94,11 +101,12 @@ namespace XamTally.Pages
 
         private void BuildToolbar()
         {
+			_toggleTimer = new ToolbarItem ("pause", "", ToggleTimer, ToolbarItemOrder.Primary, 2);
             var toolbarList = new List<ToolbarItem>
             {
                 new ToolbarItem("decrease", "", DecreaseTally, ToolbarItemOrder.Primary, 0),
                 new ToolbarItem("reset", "", ResetTally, ToolbarItemOrder.Primary, 1),
-                new ToolbarItem("pause", "", Pause, ToolbarItemOrder.Primary, 2),
+				_toggleTimer,
                 new ToolbarItem("edit", "", Edit, ToolbarItemOrder.Primary, 3),
                 new ToolbarItem("lock screen", "", LockScreen, ToolbarItemOrder.Secondary),
                 new ToolbarItem("flip screen", "", FlipScreen, ToolbarItemOrder.Secondary),
@@ -117,16 +125,11 @@ namespace XamTally.Pages
 
         private void LockScreen()
         {
+			_orientationLocked = !_orientationLocked;
         }
 
         private void Edit()
         {
-        }
-
-        private void Pause()
-        {
-			_timerState = null;
-			_timerStarted = false;
         }
 
         private void ResetTally()
@@ -137,7 +140,7 @@ namespace XamTally.Pages
 
         private void DecreaseTally()
         {
-            _tallyCount--;
+			_tallyCount = _tallyCount > 0 ? _tallyCount - 1 : 0;
             UpdateTally();
         }
 
@@ -149,35 +152,35 @@ namespace XamTally.Pages
                 ColumnDefinitions = new ColumnDefinitionCollection
                 {
                     new ColumnDefinition { Width = GridLength.Auto },
-                    new ColumnDefinition { }
+					new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) }
                 },
                 RowDefinitions = new RowDefinitionCollection()
                 {
                     new RowDefinition { Height = GridLength.Auto },
-                    new RowDefinition()
+					new RowDefinition { Height = new GridLength(1, GridUnitType.Star) }
                 }
             };
-            var tallyStack = new StackLayout();
-            tallyStack.Children.Add(new Label
+			_tallyStack = new StackLayout();
+			_tallyStack.Children.Add(new Label
             {
                 Text = "Tap to increase tally",
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 TextColor = Color.White
             });
-            tallyStack.Children.Add(_tallyLabel);
-            _grid.Children.Add(tallyStack, 0, 0);
+			_tallyStack.Children.Add(_tallyLabel);
+			_grid.Children.Add(_tallyStack, 1, 0);
 
-            var timeStack = new StackLayout();
-            timeStack.Children.Add(_timerLabel);
-            timeStack.Children.Add(new Button
+            _timeStack = new StackLayout();
+			_timeStack.Children.Add(_timerLabel);
+			_timeStack.Children.Add(new Button
             {
                 Text = "Next set",
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 Command = new DelegateCommand(IncreaseTally)
             });
-            _grid.Children.Add(timeStack, 0, 1);
+			_grid.Children.Add(_timeStack, 1, 1);
 
             return _grid;
         }
@@ -187,7 +190,9 @@ namespace XamTally.Pages
             _tallyCount++;
             UpdateTally();
             ResetTimer();
-            ToggleTimer();
+			if (!_timerStarted) {
+				ToggleTimer ();
+			}
         }
 
         private void UpdateTally()
@@ -197,17 +202,17 @@ namespace XamTally.Pages
 
         private void ToggleTimer()
         {
-
             if (!_timerStarted)
             {
 				var timerCallback = new TimerCallback(UpdateTimer);
-                _startTime = DateTime.Now;
 				_timerState.Tmr = new Timer(timerCallback, _timerState, 0, _timeInterval);
+				_toggleTimer.Name = "pause";
                 //Device.StartTimer(TimeSpan.FromMilliseconds(300), OnTick);
             }
             else
             {
 				_timerState.Tmr = null;
+				_toggleTimer.Name = "start";
                 //Device.StartTimer(TimeSpan.FromMilliseconds(300), () => false);
             }
             _timerStarted = !_timerStarted;
@@ -215,26 +220,42 @@ namespace XamTally.Pages
 
         private void ResetTimer()
         {
-            _timerStarted = false;
-			_timerLabel.Text = "00:00.0";
+			_startTime = DateTime.Now;
         }
 
         protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-            if (width > height && _isInPortrait)
-            {
-                UpdateOrientation(Orientation.Landscape);
-            }
-            else if (height > width && !_isInPortrait)
-            {
-                UpdateOrientation(Orientation.Portrait);
-            }
+		{
+			base.OnSizeAllocated (width, height);
+			if (_orientationLocked)
+				return;
+
+			if (_grid.Children.Count > 0){
+				if (width > height && _isInPortrait) {
+					SetOrientationUI (Orientation.Landscape, Orientation.Portrait);
+				} else if (height > width && !_isInPortrait) {
+					SetOrientationUI (Orientation.Portrait, Orientation.Landscape);
+				}
+			}
         }
+
+		private void SetOrientationUI(Orientation newOrientation, Orientation oldOrientation){
+			if (newOrientation == Orientation.Landscape && oldOrientation == Orientation.Portrait) {
+				UpdateOrientation (Orientation.Landscape);
+				_grid.Children.Clear ();
+				_grid.Children.Add (_tallyStack, 1, 0);            
+				_grid.Children.Add (_timeStack, 1, 1);
+			} else if (newOrientation == Orientation.Portrait && oldOrientation == Orientation.Landscape) {
+				UpdateOrientation (Orientation.Portrait);
+				_grid.Children.Clear ();
+				_grid.Children.Add (_tallyStack, 0, 1);
+				_grid.Children.Add (_timeStack, 1, 1);
+			}
+		}
 
         private void UpdateOrientation(Orientation orientation)
         {
             _isInPortrait = orientation == Orientation.Portrait;
+
             //TODO: setup grid according to orientation
         }
     }
